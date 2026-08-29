@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WhatsApp Calls</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;-webkit-font-smoothing:antialiased}
+body{background:#f0f0f0;display:flex;justify-content:center;padding:40px;font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text',sans-serif}
+.screen{width:390px;background:#fff;border-radius:40px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,0.2)}
+
+/* STATUS BAR */
+.status-bar{height:44px;display:flex;align-items:center;justify-content:space-between;padding:14px 20px 0;background:#fff}
+.status-time{font-size:15px;font-weight:600;color:#000}
+.status-icons{display:flex;align-items:center;gap:6px}
+
+/* HEADER */
+.page-header{display:flex;justify-content:space-between;align-items:flex-start;padding:8px 16px 0}
+.header-left{display:flex;flex-direction:column;gap:0}
+.menu-icon{width:36px;height:36px;border-radius:9px;background:#eef0f8;display:flex;align-items:center;justify-content:center}
+.page-title{font-size:34px;font-weight:700;color:#000;letter-spacing:0.3px;margin-top:6px}
+.add-btn{width:36px;height:36px;border-radius:50%;background:#25D366;display:flex;align-items:center;justify-content:center;margin-top:4px}
+
+/* CONTENT */
+.content{padding:0 16px}
+
+/* SECTION TITLE */
+.section-title{font-size:20px;font-weight:700;color:#000;margin:22px 0 12px}
+
+/* FAVOURITES */
+.add-fav-row{display:flex;align-items:center;gap:14px;padding:6px 0 10px}
+.add-fav-icon{width:46px;height:46px;border-radius:50%;background:#eef0f8;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.add-fav-label{font-size:16px;color:#000}
+
+/* RECENT ROWS */
+.call-row{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:0.5px solid #e5e5ea}
+.call-row:last-child{border-bottom:none}
+.call-avatar{width:48px;height:48px;border-radius:50%;overflow:hidden;flex-shrink:0}
+.call-avatar img{width:100%;height:100%;object-fit:cover}
+.call-info{flex:1;min-width:0}
+.call-name{font-size:16px;font-weight:500;color:#000;display:flex;align-items:center;gap:4px}
+.call-name.missed{color:#e53935}
+.call-type{display:flex;align-items:center;gap:5px;font-size:13px;color:#8e8e93;margin-top:2px}
+.call-meta{display:flex;flex-direction:column;align-items:flex-end;gap:6px;flex-shrink:0}
+.call-time{font-size:14px;color:#8e8e93}
+.info-btn{width:32px;height:32px;border-radius:8px;background:#eef0f8;display:flex;align-items:center;justify-content:center}
+
+/* FOOTER */
+.footer-note{text-align:center;font-size:13px;color:#8e8e93;padding:24px 20px 16px;display:flex;align-items:center;justify-content:center;gap:5px;flex-wrap:wrap}
+.footer-note a{color:#25D366;text-decoration:none}
+
+/* TAB BAR */
+.tab-bar{background:#f2f2f7;border-top:0.5px solid #c7c7cc;display:flex;padding:0 0 20px}
+.tab-item{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;padding:10px 0 0;cursor:pointer}
+.tab-label{font-size:10px;color:#8e8e93}
+.tab-label.active{color:#25D366;font-weight:600}
+</style>
+</head>
+<body>
+<div class="screen">
+
+  <!-- STATUS BAR -->
+  <div class="status-bar">
+    <span class="status-time">9:41</span>
+    <div class="status-icons">
+      <svg viewBox="0 0 17 12" fill="none" width="17" height="12"><rect x="0" y="3" width="3" height="9" fill="#000" rx="0.5"/><rect x="4.5" y="2" width="3" height="10" fill="#000" rx="0.5"/><rect x="9" y="0" width="3" height="12" fill="#000" rx="0.5"/><rect x="13.5" y="0" width="3" height="12" fill="#000" rx="0.5" opacity="0.3"/></svg>
+      <svg viewBox="0 0 16 12" fill="none" width="16" height="12"><path d="M8 3.2C10.2 3.2 12.2 4.1 13.6 5.6L15 4.2C13.2 2.3 10.7 1 8 1 5.3 1 2.8 2.3 1 4.2L2.4 5.6C3.8 4.1 5.8 3.2 8 3.2Z" fill="#000"/><path d="M8 6.4C9.4 6.4 10.7 7 11.6 7.9L13 6.5C11.7 5.2 9.9 4.4 8 4.4 6.1 4.4 4.3 5.2 3 6.5L4.4 7.9C5.3 7 6.6 6.4 8 6.4Z" fill="#000"/><circle cx="8" cy="11" r="1.5" fill="#000"/></svg>
+      <svg viewBox="0 0 25 12" fill="none" width="25" height="12"><rect x="0.5" y="0.5" width="21" height="11" rx="3.5" stroke="#000" stroke-opacity="0.35"/><rect x="2" y="2" width="18" height="8" rx="2" fill="#000"/><path d="M23 4.5V7.5C23.8 7.2 24.4 6.7 24.4 6 24.4 5.3 23.8 4.8 23 4.5Z" fill="#000" opacity="0.4"/></svg>
+    </div>
+  </div>
+
+  <!-- HEADER -->
+  <div class="page-header">
+    <div class="header-left">
+      <div class="menu-icon">
+        <svg viewBox="0 0 24 24" fill="none" width="18" height="18"><circle cx="5" cy="12" r="1.5" fill="#5b6bc0"/><circle cx="12" cy="12" r="1.5" fill="#5b6bc0"/><circle cx="19" cy="12" r="1.5" fill="#5b6bc0"/></svg>
+      </div>
+      <div class="page-title">Calls</div>
+    </div>
+    <div class="add-btn">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" width="18" height="18"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+    </div>
+  </div>
+
+  <!-- CONTENT -->
+  <div class="content">
+
+    <!-- FAVOURITES -->
+    <div class="section-title">Favourites</div>
+    <div class="add-fav-row">
+      <div class="add-fav-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#5b6bc0" stroke-width="2.2" width="20" height="20"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+      </div>
+      <span class="add-fav-label">Add favourite</span>
+    </div>
+
+    <!-- RECENT -->
+    <div class="section-title">Recent</div>
+
+    <!-- Daddy – Outgoing -->
+    <div class="call-row">
+      <div class="call-avatar"><img src="https://i.pravatar.cc/48?img=12" alt="Daddy"/></div>
+      <div class="call-info">
+        <div class="call-name">Daddy</div>
+        <div class="call-type">
+          <!-- Phone outgoing icon -->
+          <svg viewBox="0 0 24 24" fill="none" stroke="#5b6bc0" stroke-width="1.8" width="15" height="15"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 8.63 19.79 19.79 0 01.02 4a2 2 0 012-2.18h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/><polyline points="16 2 22 2 22 8" stroke-width="1.8"/><line x1="17" y1="7" x2="22" y2="2"/></svg>
+          Outgoing
+        </div>
+      </div>
+      <div class="call-meta">
+        <span class="call-time">14:01</span>
+        <div class="info-btn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#5b6bc0" stroke-width="1.8" width="18" height="18"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="8" stroke-width="2" stroke-linecap="round"/><line x1="12" y1="12" x2="12" y2="16" stroke-width="2" stroke-linecap="round"/></svg>
+        </div>
+      </div>
+    </div>
+
+    <!-- Daddy – Missed -->
+    <div class="call-row">
+      <div class="call-avatar"><img src="https://i.pravatar.cc/48?img=12" alt="Daddy"/></div>
+      <div class="call-info">
+        <div class="call-name missed">Daddy</div>
+        <div class="call-type">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#e53935" stroke-width="1.8" width="15" height="15"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 8.63 19.79 19.79 0 01.02 4a2 2 0 012-2.18h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/><polyline points="22 8 22 2 16 2" stroke-width="1.8"/><line x1="22" y1="2" x2="17" y2="7"/></svg>
+          Missed
+        </div>
+      </div>
+      <div class="call-meta">
+        <span class="call-time">14:00</span>
+        <div class="info-btn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#5b6bc0" stroke-width="1.8" width="18" height="18"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="8" stroke-width="2" stroke-linecap="round"/><line x1="12" y1="12" x2="12" y2="16" stroke-width="2" stroke-linecap="round"/></svg>
+        </div>
+      </div>
+    </div>
+
+    <!-- Daddy – Yesterday -->
+    <div class="call-row">
+      <div class="call-avatar"><img src="https://i.pravatar.cc/48?img=12" alt="Daddy"/></div>
+      <div class="call-info">
+        <div class="call-name">Daddy</div>
+        <div class="call-type">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#5b6bc0" stroke-width="1.8" width="15" height="15"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 8.63 19.79 19.79 0 01.02 4a2 2 0 012-2.18h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/><polyline points="16 2 22 2 22 8" stroke-width="1.8"/><line x1="17" y1="7" x2="22" y2="2"/></svg>
+          Outgoing
+        </div>
+      </div>
+      <div class="call-meta">
+        <span class="call-time">Yesterday</span>
+        <div class="info-btn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#5b6bc0" stroke-width="1.8" width="18" height="18"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="8" stroke-width="2" stroke-linecap="round"/><line x1="12" y1="12" x2="12" y2="16" stroke-width="2" stroke-linecap="round"/></svg>
+        </div>
+      </div>
+    </div>
+
+    <!-- Jenny – Outgoing -->
+    <div class="call-row">
+      <div class="call-avatar"><img src="https://i.pravatar.cc/48?img=47" alt="Jenny"/></div>
+      <div class="call-info">
+        <div class="call-name">Jenny ❤️</div>
+        <div class="call-type">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#5b6bc0" stroke-width="1.8" width="15" height="15"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 8.63 19.79 19.79 0 01.02 4a2 2 0 012-2.18h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/><polyline points="16 2 22 2 22 8" stroke-width="1.8"/><line x1="17" y1="7" x2="22" y2="2"/></svg>
+          Outgoing
+        </div>
+      </div>
+      <div class="call-meta">
+        <span class="call-time">15/10/85</span>
+        <div class="info-btn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#5b6bc0" stroke-width="1.8" width="18" height="18"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="8" stroke-width="2" stroke-linecap="round"/><line x1="12" y1="12" x2="12" y2="16" stroke-width="2" stroke-linecap="round"/></svg>
+        </div>
+      </div>
+    </div>
+
+    <!-- Jenny – Missed -->
+    <div class="call-row">
+      <div class="call-avatar"><img src="https://i.pravatar.cc/48?img=47" alt="Jenny"/></div>
+      <div class="call-info">
+        <div class="call-name missed">Jenny ❤️</div>
+        <div class="call-type">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#e53935" stroke-width="1.8" width="15" height="15"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 8.63 19.79 19.79 0 01.02 4a2 2 0 012-2.18h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/><polyline points="22 8 22 2 16 2" stroke-width="1.8"/><line x1="22" y1="2" x2="17" y2="7"/></svg>
+          Missed
+        </div>
+      </div>
+      <div class="call-meta">
+        <span class="call-time">11/10/85</span>
+        <div class="info-btn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#5b6bc0" stroke-width="1.8" width="18" height="18"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="8" stroke-width="2" stroke-linecap="round"/><line x1="12" y1="12" x2="12" y2="16" stroke-width="2" stroke-linecap="round"/></svg>
+        </div>
+      </div>
+    </div>
+
+    <!-- Doc Brown – Outgoing -->
+    <div class="call-row" style="border-bottom:none">
+      <div class="call-avatar"><img src="https://i.pravatar.cc/48?img=59" alt="Doc Brown"/></div>
+      <div class="call-info">
+        <div class="call-name">Emmett "Doc" Brown</div>
+        <div class="call-type">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#5b6bc0" stroke-width="1.8" width="15" height="15"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 8.63 19.79 19.79 0 01.02 4a2 2 0 012-2.18h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/><polyline points="16 2 22 2 22 8" stroke-width="1.8"/><line x1="17" y1="7" x2="22" y2="2"/></svg>
+          Outgoing
+        </div>
+      </div>
+      <div class="call-meta">
+        <span class="call-time">02/09/85</span>
+        <div class="info-btn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#5b6bc0" stroke-width="1.8" width="18" height="18"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="8" stroke-width="2" stroke-linecap="round"/><line x1="12" y1="12" x2="12" y2="16" stroke-width="2" stroke-linecap="round"/></svg>
+        </div>
+      </div>
+    </div>
+
+    <!-- FOOTER -->
+    <div class="footer-note">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#8e8e93" stroke-width="1.8" width="14" height="14"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+      Your personal calls are <a href="#">end-to-end encrypted</a>
+    </div>
+
+  </div>
+
+  <!-- TAB BAR -->
+  <div class="tab-bar">
+    <div class="tab-item">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#8e8e93" stroke-width="1.8" width="26" height="26"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+      <span class="tab-label">Updates</span>
+    </div>
+    <div class="tab-item">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#25D366" stroke-width="2" width="26" height="26"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 8.63 19.79 19.79 0 01.02 4a2 2 0 012-2.18h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+      <span class="tab-label active">Calls</span>
+    </div>
+    <div class="tab-item">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#8e8e93" stroke-width="1.8" width="26" height="26"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
+      <span class="tab-label">Communities</span>
+    </div>
+    <div class="tab-item">
+      <div style="position:relative;display:inline-block">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#8e8e93" stroke-width="1.8" width="26" height="26"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+        <div style="position:absolute;top:-4px;right:-8px;background:#FF3B30;color:#fff;font-size:10px;font-weight:600;min-width:16px;height:16px;border-radius:8px;display:flex;align-items:center;justify-content:center;padding:0 3px">1</div>
+      </div>
+      <span class="tab-label">Chats</span>
+    </div>
+    <div class="tab-item">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#8e8e93" stroke-width="1.8" width="26" height="26"><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/></svg>
+      <span class="tab-label">Settings</span>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
