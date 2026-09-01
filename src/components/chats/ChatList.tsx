@@ -45,7 +45,11 @@ export default function ChatList({ activeFilter, onChatClick }: ChatListProps) {
               <div className="chat-name">{c.name}{c.nameEmoji ? ` ${c.nameEmoji}` : ""}</div>
             </div>
             <div className="chat-preview">
-              <div className="skeleton-text"></div>
+              {c.showMessage ? (
+                <span className="chat-preview-text">{c.lastMessage}</span>
+              ) : (
+                <div className="skeleton-text"></div>
+              )}
             </div>
           </div>
           

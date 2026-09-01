@@ -16,7 +16,7 @@ export default function SplashScreen({ onFinish }: { onFinish: () => void }) {
 
   useEffect(() => {
     // 40 seconds total
-    const totalTime = 40000;
+    const totalTime = 1000;
     const intervalTime = totalTime / messages.length;
 
     const timer = setInterval(() => {
